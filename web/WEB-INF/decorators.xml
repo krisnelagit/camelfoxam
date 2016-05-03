@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators>
+    <decorator name="basic-theme" page="/decorators/basic-theme.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+    <decorator name="none">
+        <pattern>/</pattern>
+        <pattern>/Login</pattern>
+        <pattern>/verifylogin</pattern>
+        <pattern>/editinventory</pattern>
+        <pattern>/editBrandLink</pattern>
+        <pattern>/editCleaningLink</pattern>
+        <pattern>/editCategoryDetailsLink</pattern>
+        <pattern>/workmanMasterCreateLink</pattern>
+    </decorator>
+</decorators>
