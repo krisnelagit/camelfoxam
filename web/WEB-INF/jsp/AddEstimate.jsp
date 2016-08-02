@@ -236,6 +236,10 @@
             });
 
                                     $(document).ready(function () {
+            
+                                    $('form').submit(function(){
+                                        $("#iamsubmit").prop('disabled', true);
+                                    });
                                     
                                     $(".tabspecific").each(function (i) { $(this).attr('tabindex', i + 1); });
 
@@ -395,7 +399,7 @@
                         <INPUT type="button" value="Delete Selected" onclick="deleteRow('dataTable1')"  class="view3"/></div>  
                     <br>
                     <center>
-                        <input type="submit" value="Save" class="view3" style="cursor: pointer"/>
+                        <input type="submit" value="Save" class="view3" id="iamsubmit" style="cursor: pointer"/>
                     </center>
 
                     <br />

@@ -20,7 +20,7 @@
             <table width="100%" cellpadding="5">
                 <tr>
                     <td width="34%" align="left" valign="top">Customer Name</td>
-                    <td width="66%" align="left" valign="top"><input type="text"pattern=".{3,20}" required="" title="3 to 20 characters max name allowed" name="name" id="textfield2" value="${customerDt.name}" /></td>
+                    <td width="66%" align="left" valign="top"><input type="text" name="name" id="textfield2" value="${customerDt.name}" /></td>
                 </tr>
                 <tr>
                     <td width="34%" align="left" valign="top">Address</td>
