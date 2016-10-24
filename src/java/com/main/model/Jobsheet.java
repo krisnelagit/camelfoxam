@@ -20,12 +20,12 @@ import javax.persistence.Table;
 public class Jobsheet {
     @Id
     private String id;
-    private String estimateid,cvid,verified,cleaning,car_washing,car_vacuuming,tyre_polish,dashboard_polish,engine_cleaning,underchasis_cleaning,trunk_cleaning,km_out,isinvoiceconverted="No",isrequisitionready="No",istaskcompleted="No",isdelete="No",ishidden="No",modifydate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+    private String estimateid,cvid,verified,cleaning,car_washing,car_vacuuming,tyre_polish,dashboard_polish,engine_cleaning,underchasis_cleaning,trunk_cleaning,km_out,isinvoiceconverted="No",isrequisitionready="No",istaskcompleted="No",isdelete="No",enableDelete="Yes",ishidden="No",jobsheetcomments,spcomments,jvcomments,finalcomments,deliverydate,modifydate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
     public Jobsheet() {
     }
 
-    public Jobsheet(String id, String estimateid, String cvid, String verified, String cleaning, String car_washing, String car_vacuuming, String tyre_polish, String dashboard_polish, String engine_cleaning, String underchasis_cleaning, String trunk_cleaning, String km_out) {
+    public Jobsheet(String id, String estimateid, String cvid, String verified, String cleaning, String car_washing, String car_vacuuming, String tyre_polish, String dashboard_polish, String engine_cleaning, String underchasis_cleaning, String trunk_cleaning, String km_out, String jobsheetcomments, String spcomments, String jvcomments, String finalcomments, String deliverydate) {
         this.id = id;
         this.estimateid = estimateid;
         this.cvid = cvid;
@@ -39,8 +39,63 @@ public class Jobsheet {
         this.underchasis_cleaning = underchasis_cleaning;
         this.trunk_cleaning = trunk_cleaning;
         this.km_out = km_out;
+        this.jobsheetcomments = jobsheetcomments;
+        this.spcomments = spcomments;
+        this.jvcomments = jvcomments;
+        this.finalcomments = finalcomments;
+        this.deliverydate = deliverydate;
     }
 
+    
+
+    public String getEnableDelete() {
+        return enableDelete;
+    }
+
+    public void setEnableDelete(String enableDelete) {
+        this.enableDelete = enableDelete;
+    }
+
+    public String getJobsheetcomments() {
+        return jobsheetcomments;
+    }
+
+    public void setJobsheetcomments(String jobsheetcomments) {
+        this.jobsheetcomments = jobsheetcomments;
+    }
+
+    public String getSpcomments() {
+        return spcomments;
+    }
+
+    public void setSpcomments(String spcomments) {
+        this.spcomments = spcomments;
+    }
+
+    public String getJvcomments() {
+        return jvcomments;
+    }
+
+    public void setJvcomments(String jvcomments) {
+        this.jvcomments = jvcomments;
+    }
+
+    public String getFinalcomments() {
+        return finalcomments;
+    }
+
+    public void setFinalcomments(String finalcomments) {
+        this.finalcomments = finalcomments;
+    }
+
+    public String getDeliverydate() {
+        return deliverydate;
+    }
+
+    public void setDeliverydate(String deliverydate) {
+        this.deliverydate = deliverydate;
+    }
+    
     public String getIshidden() {
         return ishidden;
     }

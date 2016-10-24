@@ -5,6 +5,17 @@
     Author     : pc2
 --%>
 
+<!--**required validation before changes**
+customermobilenumber
+customer_name
+transactionmail
+vehicleid
+vehiclenumber
+insurancecompanyname
+insurancetype
+claimnumber
+insurancepercent-->
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -198,10 +209,10 @@
                     $('.insurancelbsum').show();
                     $('#claimss').show();
 
-                    $('#companyname').prop('required', true);
-                    $('#typeofinsurance').prop('required', true);
-                    $('#claimno').prop('required', true);
-                    $('.insurancepercent').prop('required', true);
+//                    $('#companyname').prop('required', true);
+//                    $('#typeofinsurance').prop('required', true);
+//                    $('#claimno').prop('required', true);
+//                    $('.insurancepercent').prop('required', true);
 
                 } else {
                     $('#insurancecompany').hide();
@@ -216,10 +227,10 @@
                     $('#claimss').hide();
                     $('.insurancelbsum').hide();
 
-                    $('#companyname').prop('required', false);
-                    $('#typeofinsurance').prop('required', false);
-                    $('#claimno').prop('required', false);
-                    $('.insurancepercent').prop('required', false);
+//                    $('#companyname').prop('required', false);
+//                    $('#typeofinsurance').prop('required', false);
+//                    $('#claimno').prop('required', false);
+//                    $('.insurancepercent').prop('required', false);
                 }
             }
 
@@ -931,10 +942,10 @@
                 $('.insurancelbsum').hide();
                 $('#claimss').hide();
 
-                $('#companyname').prop('required', false);
-                $('#typeofinsurance').prop('required', false);
-                $('#claimno').prop('required', false);
-                $('.insurancepercent').prop('required', false);
+//                $('#companyname').prop('required', false);
+//                $('#typeofinsurance').prop('required', false);
+//                $('#claimno').prop('required', false);
+//                $('.insurancepercent').prop('required', false);
 
 
                 $('#selectinsurance').change(function () {
@@ -953,10 +964,10 @@
                         $('.insurancelbsum').show();
                         $('#claimss').show();
 
-                        $('#companyname').prop('required', true);
-                        $('#typeofinsurance').prop('required', true);
-                        $('#claimno').prop('required', true);
-                        $('.insurancepercent').prop('required', true);
+//                        $('#companyname').prop('required', true);
+//                        $('#typeofinsurance').prop('required', true);
+//                        $('#claimno').prop('required', true);
+//                        $('.insurancepercent').prop('required', true);
                     } else {
 
                         $('#insurancecompany').hide();
@@ -978,10 +989,10 @@
 
 //                        $('#grandtotal').val(getamtTotal);
 
-                        $('#companyname').prop('required', false);
-                        $('#typeofinsurance').prop('required', false);
-                        $('#claimno').prop('required', false);
-                        $('.insurancepercent').prop('required', false);
+//                        $('#companyname').prop('required', false);
+//                        $('#typeofinsurance').prop('required', false);
+//                        $('#claimno').prop('required', false);
+//                        $('.insurancepercent').prop('required', false);
 
 
 
@@ -1007,6 +1018,16 @@
                 }
             }
 
+            //code for individual discount adding
+            function addtoDiscount() {
+                var partAmt = $("#sparepartsDiscount").val();
+                var labourAmt = $("#labourDiscount").val();
+
+                var total = Number(partAmt) + Number(labourAmt);
+                $("#discounttotal").val(total);
+                $('#discounttotal').trigger('change');
+            }
+
             //code for calculating discount minus final amount
             function showgrandtotal(a) {
                 var discount = $(a).val();
@@ -1019,6 +1040,19 @@
                 var actualgrandtotal = Number(parttotal) + Number(servicetotal) + Number(vat) + Number(servicetax);
                 var newtotal = Number(actualgrandtotal) - Number(discount);
                 $('#grandtotal').val(newtotal.toFixed(2));
+            }
+
+            function validateForm(formObj) {
+
+                if (formObj.customermobilenumber.value == '') {
+                    alert('Please enter mobile number');
+                    return false;
+                }
+
+                formObj.submitButton.disabled = true;
+                formObj.submitButton.value = 'Please Wait...';
+                return true;
+
             }
 
         </script>
@@ -1068,26 +1102,26 @@
                     <td width="31%" align="left" valign="top">Customer mobile number</td>
                     <td width="69%" align="left" valign="top"><label for="textfield"></label>
                         <label for="select"></label>
-                        <input type="text" name="customermobilenumber" value="" required="" id="mobilenumber" />   
+                        <input type="text" name="customermobilenumber" value="" id="mobilenumber" />   
                     </td>
                 </tr>
                 <tr>
                     <td width="31%" align="left" valign="top">Customer name</td>
                     <td width="69%" align="left" valign="top"><label for="textfield"></label>
                         <label for="select"></label>
-                        <input type="text" name="customer_name" value="" required="" id="customer_name" />   
+                        <input type="text" name="customer_name" value="" id="customer_name" />   
                         <input type="hidden" name="customer_id" id="customer_id" value="" />
                     </td>
                 </tr>
                 <tr>
                     <td align="left" valign="top">Vehicle Model</td>
                     <td align="left" valign="top"><label for="textfield3"></label>
-                        <input type="text" name="vehiclemodel" id="vehicle" /> <input type="hidden" required=""  name="vehicleid" id="vehicleid" /><input type="hidden" name="vehicletype" id="vehicletype" value="" /></td>
+                        <input type="text" name="vehiclemodel" id="vehicle" /> <input type="hidden" name="vehicleid" id="vehicleid" /><input type="hidden" name="vehicletype" id="vehicletype" value="" /></td>
                 </tr>
                 <tr>
                     <td align="left" valign="top">Vehicle Number</td>
                     <td align="left" valign="top"><label for="textfield3"></label>
-                        <input type="text" required=""  name="vehiclenumber" /></td>
+                        <input type="text" name="vehiclenumber" /></td>
                 </tr>
                 <tr>
                     <td align="left" valign="top">Insurance </td>
@@ -1100,12 +1134,12 @@
                 <tr id="insurancecompany">
                     <td align="left" valign="top">Insurance Company</td>
                     <td align="left" valign="top"><label for="textfield3"></label>
-                        <input type="text" required name="insurancecompanyname" id="companyname" /><input type="hidden" name="insurancecompany" id="companyid" /></td>
+                        <input type="text" name="insurancecompanyname" id="companyname" /><input type="hidden" name="insurancecompany" id="companyid" /></td>
                 </tr>
                 <tr id="insurancetype">
                     <td align="left" valign="top">Insurance Type</td>
                     <td align="left" valign="top"><label for="textfield3"></label>
-                        <select required name="insurancetype" id="typeofinsurance" onchange="makefull(this);">
+                        <select name="insurancetype" id="typeofinsurance" onchange="makefull(this);">
                             <option value="" disabled selected style="display: none">--select--</option>
                             <option value="Full Payment">Full Payment</option>
                             <option value="Depreciation">Depreciation</option>
@@ -1115,7 +1149,7 @@
                 <tr id="claimnumber">
                     <td align="left" valign="top">Claim Number</td>
                     <td align="left" valign="top"><label for="textfield3"></label>
-                        <input required type="text"  name="claimnumber" id="claimno" /></td>
+                        <input type="text"  name="claimnumber" id="claimno" /></td>
                 </tr>            
                 <tr>
                     <td>&nbsp;</td>
@@ -1146,7 +1180,7 @@
                     </td>
                     <td align="left" valign="top"><input name="partQuantity" type="number" class="quantity" style="width: 45px" onchange="calculatebalance(this)" onclick="calculatebalance(this)" /></td>
                     <td align="left" valign="top"><input name="sellingprice" type="number" onchange="calculateselling(this)" class="sellingprice" style="width: 50px"/></td>
-                    <td align="left" valign="top" class="inventoryinsurance"><input required name="insurancepercent" min="0" max="100" value="0" step="0.01" type="number" class="insurancepercent" onchange="calculateinsurance(this)" style="width: 100px" /></td>
+                    <td align="left" valign="top" class="inventoryinsurance"><input name="insurancepercent" min="0" max="100" value="0" step="0.01" type="number" class="insurancepercent" onchange="calculateinsurance(this)" style="width: 100px" /></td>
                     <td align="left" valign="top" class="inventorycompanyinsurance"><input name="insurancecompanyamount" readonly="" type="text" value="0" class="insurancers" style="width: 100px"/></td>
                     <td align="left" valign="top" class="inventorycustinsurance"><input name="insurancecustomeramount" readonly="" type="text" value="0" class="custinsurance" style="width: 100px"/></td>
                     <td align="left" valign="top"><input name="itemtotal" readonly="" type="number" value="0" class="itemtotal" style="width: 100px"/></td>
@@ -1159,6 +1193,12 @@
                         <td width="33%">Spare parts Total</td>
                         <td>
                             <input style="width: 100px" name="sparepartsfinal" readonly="" value="0" type="text" id="sparepartsfinal" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="33%">Discount</td>
+                        <td>
+                            <input style="width: 100px" name=""value="0" type="text" id="sparepartsDiscount" onchange="addtoDiscount()" />
                         </td>
                     </tr>
                     <tr class="insurancelbsum">
@@ -1207,6 +1247,10 @@
                     <tr>
                         <td width="33%">Labour Total</td>
                         <td><input style="width: 100px" name="labourfinal" readonly="" value="0" type="text" id="labourfinal" /></td>
+                    </tr>
+                    <tr>
+                        <td width="33%">Discount</td>
+                        <td><input style="width: 100px" name="" value="0" type="text" id="labourDiscount" onchange="addtoDiscount()" /></td>
                     </tr>
                     <tr class="insurancelbsum">
                         <td>Ins. liability</td>
@@ -1288,7 +1332,7 @@
             <input type="radio" class="modradiobutton" name="isapplicable" onchange="calltax(this)" id="yesappicable" value="Yes"> Yes &nbsp;<input type="radio" class="modradiobutton" name="isapplicable" onchange="calltax(this)" id="noappicable" value="No"> No<br>
             
             <center>        
-                <input type="submit" value="Save" class="view3" style="cursor: pointer"/>&nbsp;&nbsp;&nbsp;<input type="reset" value="Reset" class="view3" style="cursor: pointer"/>
+                <input type="submit" value="Save" class="view3" name="submitButton" style="cursor: pointer"/>&nbsp;&nbsp;&nbsp;<input type="reset" value="Reset" class="view3" style="cursor: pointer"/>
             </center>    
             <br /> 
         </form>

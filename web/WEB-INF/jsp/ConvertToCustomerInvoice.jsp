@@ -1002,6 +1002,16 @@
                 });
             });
 
+            //code for individual discount adding
+            function addtoDiscount() {
+                var partAmt = $("#sparepartsDiscount").val();
+                var labourAmt = $("#labourDiscount").val();
+
+                var total = Number(partAmt) + Number(labourAmt);
+                $("#discounttotal").val(total);
+                $('#discounttotal').trigger('change');
+            }
+
             //code for calculating discount minus final amount
             function showgrandtotal(a) {
                 console.log("Here m inside");
@@ -1191,6 +1201,12 @@
                                 <input style="width: 100px" name="sparepartsfinal" readonly="" value="${parttotaldt}" type="text" id="sparepartsfinal" />
                             </td>
                         </tr>
+                        <tr>
+                            <td width="33%">Discount</td>
+                            <td>
+                                <input style="width: 100px" name="" value="0" type="text" id="sparepartsDiscount" onchange="addtoDiscount()" />
+                            </td>
+                        </tr>
                         <tr class="insurancelbsum">
                             <td>Ins. liability</td>
                             <td>
@@ -1273,6 +1289,10 @@
                         <tr>
                             <td width="33%">Labour Total</td>
                             <td><input style="width: 100px" name="labourfinal" readonly="" value="${labortotaldt}" type="text" id="labourfinal" /></td>
+                        </tr>
+                        <tr>
+                            <td width="33%">Discount</td>
+                            <td><input style="width: 100px" name="" value="0" type="text" id="labourDiscount" onchange="addtoDiscount()" /></td>
                         </tr>
                         <tr class="insurancelbsum">
                             <td>Ins. liability</td>

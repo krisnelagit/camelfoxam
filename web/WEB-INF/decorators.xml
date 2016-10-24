@@ -6,7 +6,7 @@
     <decorator name="none">
         <pattern>/</pattern>
         <pattern>/Login</pattern>
-        <pattern>/verifylogin</pattern>
+        <pattern>/verifyLogin</pattern>
         <pattern>/editinventory</pattern>
         <pattern>/editBrandLink</pattern>
         <pattern>/editCleaningLink</pattern>

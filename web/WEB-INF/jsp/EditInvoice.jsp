@@ -914,6 +914,19 @@
                 $('#grandtotal').val(newtotal.toFixed(2));
                 $('#amountTotal').val(newtotal.toFixed(2));
             }
+
+            function validateForm(formObj) {
+
+                if (formObj.reason.value == '') {
+                    alert('Please enter a reason');
+                    return false;
+                }
+
+                formObj.submitButton.disabled = true;
+                formObj.submitButton.value = 'Please Wait...';
+                return true;
+
+            }
         </script>
         <STYLE>
             .ui-autocomplete { height: 200px; overflow-y: scroll; overflow-x: hidden;}
@@ -1051,7 +1064,7 @@
 
         <h2>Edit Invoice</h2>
         <br />
-        <form action="updateInvoice" method="POST">
+        <form action="updateInvoice" method="POST" onsubmit="return validateForm(this);">
             <!--reason box begins here-->
             <div id="modal">
                 <div class="modal-content">
@@ -1070,7 +1083,7 @@
                                 <tr>
                                     <td align="left" valign="top">&nbsp;</td>
                                     <td align="left" valign="top">
-                                        <input type="submit" onclick="$('#loopvalue').val($('.serviceloopcount:visible').length);" value="Update" class="view3"/>
+                                        <input type="submit" name="submitButton" onclick="$('#loopvalue').val($('.serviceloopcount:visible').length);" value="Update" class="view3"/>
                                     </td>
                                 </tr>
                             </tbody>
@@ -1318,29 +1331,25 @@
             <br>
             <br>
 
-            <TABLE id="dataTable2">   
-                <c:set value="1" var="count"></c:set>
-                <c:forEach var="obva" items="${vatDetails}">
-                    <tr>
-                        <td width="24%" align="left">
-                            <strong>Add ${obva.name} @ ${obva.percent}%</strong>
-                        </td>
-                        <td align="left" valign="top">
-                            <input name="taxid" type="hidden" id="taxid" value="${obva.id}"  />
-                            <input name="taxname" type="hidden" readonly value="${obva.name}" class="taxname" />
-                            <input name="taxpercent${count}" value="${obva.percent}" type="hidden" class="taxpercent${count}"/>
-                            <c:choose>
-                                <c:when test="${count==1}">
-                                    <input name="taxAmount1" value="${invoiceDt.taxAmount1}" type="text" readonly="" value="0" class="taxAmount${count}" style="width: 100px"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <input name="taxAmount2" value="${invoiceDt.taxAmount2}" type="text" readonly="" value="0" class="taxAmount${count}" style="width: 100px"/>
-                                </c:otherwise>
-                            </c:choose>
-                        </td>              
-                    </tr>
-                    <c:set value="${count+1}" var="count"></c:set>
-                </c:forEach>
+            <TABLE id="dataTable2"> 
+                <tr>
+                    <td width="24%" align="left">
+                        <strong>Add VAT @ ${invoiceDt.taxpercent1}%</strong>
+                    </td>
+                    <td align="left" valign="top">
+                        <input name="taxpercent1" value="${invoiceDt.taxpercent1}" type="hidden" class="taxpercent1"/>
+                        <input name="taxAmount1" value="${invoiceDt.taxAmount1}" type="text" readonly="" value="0" class="taxAmount1" style="width: 100px"/>
+                    </td>              
+                </tr>
+                <tr>
+                    <td width="24%" align="left">
+                        <strong>Add SERVICE TAX @ ${invoiceDt.taxpercent2}%</strong>
+                    </td>
+                    <td align="left" valign="top">
+                        <input name="taxpercent2" value="${invoiceDt.taxpercent2}" type="hidden" class="taxpercent2"/>
+                        <input name="taxAmount2" value="${invoiceDt.taxAmount2}" type="text" readonly="" value="0" class="taxAmount2" style="width: 100px"/>
+                    </td>              
+                </tr>
             </TABLE>
             <TABLE id="claimss">
                 <tr>

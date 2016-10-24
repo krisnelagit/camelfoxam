@@ -86,6 +86,7 @@ public class UpdateInvoiceController {
                 invoice.setIspaid("Yes");
             }
         } else {
+            invoice.setBalanceamount(invoice.getAmountTotal());
         }
         //code to update balance amount if atleast one payment is made ends! here
 
@@ -100,7 +101,12 @@ public class UpdateInvoiceController {
             invoice.setTaxAmount2("0");
             invoice.setAmountTotal("" + result);
             invoice.setCustomertotal("" + result);
-            invoice.setCustomerinsuranceliability("" + result);
+            if (invoice.getInsurancetype().equals("Depreciation")) {
+                invoice.setCustomerinsuranceliability("" + result);
+
+            } else {
+                invoice.setCustomerinsuranceliability("0");
+            }
             invoice.setIstax("No");
             updateService.update(invoice);
         }
@@ -131,6 +137,8 @@ public class UpdateInvoiceController {
         }
         //code to first maintain quantity of carpartino ends! here
 
+        double vattax = Double.parseDouble(invoice.getTaxpercent1());
+        double servicetax = Double.parseDouble(invoice.getTaxpercent2());
         //4.this code updates old invoice part details as it is 
         for (int i = 0; inventoryArray.getPartid() != null && i < inventoryArray.getPartid().length; i++) {
             //code to update invoice details goes here
@@ -147,6 +155,11 @@ public class UpdateInvoiceController {
                 invoicedetails.setInsurancepercent(inventoryArray.getInsurancepercent()[i]);
                 invoicedetails.setInsurancecustomeramount(inventoryArray.getInsurancecustomeramount()[i]);
                 invoicedetails.setInsurancecompanyamount(inventoryArray.getInsurancecompanyamount()[i]);
+                double amount = Double.parseDouble(inventoryArray.getInsurancecompanyamount()[i].toString());
+                double taxes = amount * vattax / 100;
+                double total = amount + taxes;
+                invoicedetails.setBalance("" + total);
+                invoicedetails.setPaidamount("0");
             }
             invoicedetails.setTotal(inventoryArray.getItemtotal()[i]);
             updateService.update(invoicedetails);
@@ -351,6 +364,11 @@ public class UpdateInvoiceController {
                 labourInventory.setServiceinsurancepercent(inventoryArray.getServiceinsurancepercent()[i]);
                 labourInventory.setCompanyinsurance(inventoryArray.getCompanyinsuranceservice()[i]);
                 labourInventory.setCustomerinsurance(inventoryArray.getCustinsuranceservice()[i]);
+                double amount = Double.parseDouble(inventoryArray.getCompanyinsuranceservice()[i].toString());
+                double taxes = amount * servicetax / 100;
+                double total = amount + taxes;
+                labourInventory.setBalance("" + total);
+                labourInventory.setPaidamount("0");
             }
             labourInventory.setTotal(inventoryArray.getServicetotal()[i]);
             updateService.update(labourInventory);
@@ -372,6 +390,11 @@ public class UpdateInvoiceController {
                     labourInventory.setServiceinsurancepercent(updateInventoryArray.getNewserviceinsurancepercent()[i]);
                     labourInventory.setCompanyinsurance(updateInventoryArray.getNewcompanyinsuranceservice()[i]);
                     labourInventory.setCustomerinsurance(updateInventoryArray.getNewcustinsuranceservice()[i]);
+                    double amount = Double.parseDouble(updateInventoryArray.getNewcustinsuranceservice()[i].toString());
+                    double taxes = amount * servicetax / 100;
+                    double total = amount + taxes;
+                    labourInventory.setBalance("" + total);
+                    labourInventory.setPaidamount("0");
                 }
                 labourInventory.setTotal(updateInventoryArray.getNewservicetotal()[i]);
                 insertService.insert(labourInventory);
@@ -397,6 +420,11 @@ public class UpdateInvoiceController {
                     invoicedetails.setInsurancepercent(updateInventoryArray.getNewinsurancepercent()[i]);
                     invoicedetails.setInsurancecustomeramount(updateInventoryArray.getNewinsurancecustomeramount()[i]);
                     invoicedetails.setInsurancecompanyamount(updateInventoryArray.getNewinsurancecompanyamount()[i]);
+                    double amount = Double.parseDouble(updateInventoryArray.getNewinsurancecompanyamount()[i].toString());
+                    double taxes = amount * vattax / 100;
+                    double total = amount + taxes;
+                    invoicedetails.setBalance("" + total);
+                    invoicedetails.setPaidamount("0");
                 }
                 invoicedetails.setTotal(updateInventoryArray.getNewitemtotal()[i]);
                 insertService.insert(invoicedetails);

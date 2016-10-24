@@ -21,12 +21,12 @@ public class LabourInventory {
 
     @Id
     private String id;
-    private String serviceid, servicename, invoiceid, serviceinsurancepercent, companyinsurance, customerinsurance, description, total, isdelete = "No", modifydate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+    private String serviceid, servicename, invoiceid, serviceinsurancepercent, companyinsurance, customerinsurance, description, total,balance,paidamount,isinsurancepaid = "No", isdelete = "No", modifydate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
     public LabourInventory() {
     }
 
-    public LabourInventory(String id, String serviceid, String servicename, String invoiceid, String serviceinsurancepercent, String companyinsurance, String customerinsurance, String description, String total) {
+    public LabourInventory(String id, String serviceid, String servicename, String invoiceid, String serviceinsurancepercent, String companyinsurance, String customerinsurance, String description, String total, String balance, String paidamount) {
         this.id = id;
         this.serviceid = serviceid;
         this.servicename = servicename;
@@ -36,6 +36,32 @@ public class LabourInventory {
         this.customerinsurance = customerinsurance;
         this.description = description;
         this.total = total;
+        this.balance = balance;
+        this.paidamount = paidamount;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public String getPaidamount() {
+        return paidamount;
+    }
+
+    public void setPaidamount(String paidamount) {
+        this.paidamount = paidamount;
+    }
+
+    public String getIsinsurancepaid() {
+        return isinsurancepaid;
+    }
+
+    public void setIsinsurancepaid(String isinsurancepaid) {
+        this.isinsurancepaid = isinsurancepaid;
     }
 
     public String getServicename() {

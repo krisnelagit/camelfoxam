@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit 180point Checklist</title>
+        <link rel="stylesheet" type="text/css" href="css/tablet-checkbox-button.css">
         <link href="css/other_style.css" rel="stylesheet" type="text/css" />
         <link href="css/jquery-ui_1.css" rel="stylesheet" type="text/css" />
         <link href="css/csstable.css" rel="stylesheet" type="text/css" />
@@ -33,7 +34,7 @@
         <h2>180 Point  Check-List Edit</h2>
         <br />
         <form action="update180pointchecklist" method="post">
-            
+
             <table width="100%" cellpadding="5">
 
                 <tr>
@@ -83,28 +84,35 @@
             <hr/>
             <br />
             <div id="accordion">
-                        <c:forEach var="ni" items="${allpartdetails}">
-                            <h3>${ni.categoryname}</h3>
-                            <div>
-                                <table width="100%" cellpadding="5">
-                                    <c:forEach var="nii" items="${ni.notmatchpartlist}" varStatus="loop">
-                                        <c:if test="${not loop.first and loop.index % 2 == 0}">
-                                        </tr><tr>
+                <c:forEach var="ni" items="${allpartdetails}">
+                    <h3>${ni.categoryname}</h3>
+                    <div>
+                        <table width="100%" cellpadding="5">
+                            <c:forEach var="nii" items="${ni.notmatchpartlist}" varStatus="loop">
+                                <c:if test="${not loop.first and loop.index % 2 == 0}">
+                                    <tr>
                                     </c:if>
-                                    <td width="13%" align="left" valign="top">${nii.name} </td>
                                     <td width="26%" align="left" valign="top">
-                                        <label for="textfield"></label>                        
-                                        <input type="checkbox" class="modtabcheckbox" name="carpartvaultchecks" value="${nii.id}" />
+                                        <label for="textfield"></label>     
+                                        <div id="ck-button">
+                                            <label>
+                                                <input type="checkbox" name="carpartvaultchecks" value="${nii.id}"><span>${nii.name}</span>
+                                            </label>
+                                        </div> 
                                     </td>
                                 </c:forEach>
-                                    <c:forEach var="nii" items="${ni.matchpartlist}" varStatus="loop">
-                                        <c:if test="${not loop.first and loop.index % 2 == 0}">
-                                        </tr><tr>
+                            </tr>
+                            <c:forEach var="nii" items="${ni.matchpartlist}" varStatus="loop">
+                                <c:if test="${not loop.first and loop.index % 2 == 0}">
+                                    <tr>
                                     </c:if>
-                                    <td width="13%" align="left" valign="top">${nii.name} </td>
                                     <td width="26%" align="left" valign="top">
-                                        <label for="textfield"></label>                        
-                                        <input type="checkbox" class="modtabcheckbox" checked="" name="carpartvaultchecks" value="${nii.id}" />
+                                        <label for="textfield"></label>
+                                        <div id="ck-button">
+                                            <label>
+                                                <input type="checkbox" checked="" name="carpartvaultchecks" value="${nii.id}"><span>${nii.name}</span>
+                                            </label>
+                                        </div>
                                     </td>
                                 </c:forEach>
                         </table>
@@ -129,4 +137,3 @@
 
 </body>
 </html>
- 

@@ -20,7 +20,70 @@
                     "${oba.mobilenumber}",
             </c:forEach>];
                 $("#tags").autocomplete({
-                    source: availabletags
+                    source: availabletags,
+                    select: function (event, ui) {
+                        var customerMobileNo = ui.item.value;
+                        $.ajax({
+                            url: "getCustomerDetailsurl",
+                            dataType: 'json',
+                            type: 'POST',
+                            data: {
+                                custmobile: customerMobileNo
+                            },
+                            success: function (data) {
+                                if (data) {
+                                    $("#CustomerName").val(data[0].name);
+                                    $("#emailid").val(data[0].email);
+                                    $("#address").val(data[0].address);
+                                    $("#customerid").val(data[0].id);
+                                }
+                            }, error: function () {
+                            }
+                        });
+                    },
+                    change: function () {
+
+                        var val = $(this).val();
+                        var exists = $.inArray(val, availabletags);
+                        if (exists < 0) {
+                            $(this).val("");
+                            $("#CustomerName").val("");
+                            $("#emailid").val("");
+                            $("#address").val("");
+                            $("#customerid").val("");
+                            return false;
+                        } else {
+
+                        }
+                    }
+                });
+                
+                var person = [
+            <c:forEach var="occ" items="${customerdt}">
+                    {custname: "${occ.name}", custid: "${occ.id}", custMobile: "${occ.mobilenumber}", custEmail: "${occ.email}", custAddress: "${occ.address}"},
+            </c:forEach>
+                ];
+
+                var source = [];
+                var mapping = {};
+                //mapping customer mobile number to id and customer id to name
+                for (var i = 0; i < person.length; ++i) {
+                    source.push(person[i].custname);
+                    mapping[person[i].custname] = person[i].custid + ',' + person[i].custMobile + ',' + person[i].custEmail + ',' + person[i].custAddress;
+                }
+
+                $("input:text[id^='CustomerName']").on("focus.autocomplete", null, function () {
+                    $(this).autocomplete({
+                        source: source,
+                        select: function (event, ui) {
+                            var data = mapping[ui.item.value];
+                            var splitvar = data.split(',');
+                            $("#customerid").val(splitvar[0]);
+                            $("#tags").val(splitvar[1]);
+                            $("#emailid").val(splitvar[2]);
+                            $("#address").val(splitvar[3]);
+                        }
+                    });
                 });
             });
 
@@ -138,15 +201,15 @@
                     </tr>
                     <tr>
                         <td width="34%" align="left" valign="top">Customer Name</td>
-                        <td width="66%" align="left" valign="top"><input type="text" readonly="" name="customername" id="CustomerName" value="${insurancedetailsdt.custname}" /></td>
+                        <td width="66%" align="left" valign="top"><input type="text" name="customername" id="CustomerName" value="${insurancedetailsdt.custname}" /></td>
                     </tr>
                     <tr>
                         <td width="34%" align="left" valign="top">Email id.</td>
-                        <td width="66%" align="left" valign="top"><input type="text" readonly="" name="email" value="${insurancedetailsdt.email}" id="emailid" /></td>
+                        <td width="66%" align="left" valign="top"><input type="text" name="email" value="${insurancedetailsdt.email}" id="emailid" /></td>
                     </tr>
                     <tr>
                         <td width="34%" align="left" valign="top">Address</td>
-                        <td width="66%" align="left" valign="top"><textarea name="address" readonly="" id="address">${insurancedetailsdt.address}</textarea></td>
+                        <td width="66%" align="left" valign="top"><textarea name="address" id="address">${insurancedetailsdt.address}</textarea></td>
                     </tr>
                     <tr>
                         <td width="34%" align="left" valign="top">Policy no.</td>

@@ -37,7 +37,7 @@
                             if (data) {
                                 for (var i = 0; i < data.length; i++)
                                 {
-                                    $('.popupbody').append('<tr><td align="left">' + data[i].invoiceid + '</td><td align="left">' + data[i].vehiclenumber + '</td><td align="left">' + data[i].servicedate + '</td><td align="left"><a href="viewCustomerInvoice?invoiceid=' + data[i].invoiceid + '"><img src="images/view.png" width="16" height="15" /></a></tr>')
+                                    $('.popupbody').append('<tr><td align="left">' + data[i].invoiceid + '</td><td align="left">' + data[i].vehiclenumber + '</td><td align="left">' + data[i].servicedate + '</td><td align="left"><a target="_blank" href="viewCustomerInvoice?invoiceid=' + data[i].invoiceid + '"><img src="images/view.png" width="16" height="15" /></a></tr>')
                                 }
                                 $('#table_id2').DataTable();
                                 //our view dialog
@@ -77,14 +77,14 @@
                             if (data) {
                                 for (var i = 0; i < data.length; i++)
                                 {
-                                    $('.popupbody5').append('<tr><td align="left">' + data[i].id + '</td><td align="left">' + data[i].carbrand + '</td><td align="left">' + data[i].carmodel + '</td><td align="left">' + data[i].vehiclenumber + '</td><td align="left">' + data[i].cldate + '</td><td align="left"><a href="trackCarStatus?id=' + data[i].id + '&custid='+data[i].custid+'"><img src="images/view.png" width="16" height="15" /></a></tr>');
+                                    $('.popupbody5').append('<tr><td align="left">' + data[i].id + '</td><td align="left">' + data[i].carbrand + '</td><td align="left">' + data[i].carmodel + '</td><td align="left">' + data[i].vehiclenumber + '</td><td align="left">' + data[i].cldate + '</td><td align="left"><a target="_blank" href="trackCarStatus?id=' + data[i].id + '&custid='+data[i].custid+'"><img src="images/view.png" width="16" height="15" /></a></tr>');
                                 }
                                 $('#table_id6').DataTable();
                                 //our view dialog
                                 $("#dialogservicechecklistDetail").dialog({
                                     modal: true,
                                     effect: 'drop',
-                                    width: 500,
+                                    width: 700,
                                     height: 400,
                                     show: {
                                         effect: "drop"

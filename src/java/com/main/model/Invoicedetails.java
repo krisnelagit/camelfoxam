@@ -21,13 +21,13 @@ public class Invoicedetails {
 
     @Id
     private String id;
-    private String invoiceid, insurancepercent,partname, insurancecompanyamount, inventoryid,insurancecustomeramount, total, type, manufacturerid, vendor, costprice, partid, quantity, isdelete = "No", modifydate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+    private String invoiceid, insurancepercent,partname, insurancecompanyamount, inventoryid,insurancecustomeramount, total, type, manufacturerid, vendor, costprice, partid, quantity,balance,paidamount,isinsurancepaid = "No", isdelete = "No", modifydate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
     private float sellingprice;
 
     public Invoicedetails() {
     }
 
-    public Invoicedetails(String id, String invoiceid, String insurancepercent, String partname, String insurancecompanyamount, String inventoryid, String insurancecustomeramount, String total, String type, String manufacturerid, String vendor, String costprice, String partid, String quantity, float sellingprice) {
+    public Invoicedetails(String id, String invoiceid, String insurancepercent, String partname, String insurancecompanyamount, String inventoryid, String insurancecustomeramount, String total, String type, String manufacturerid, String vendor, String costprice, String partid, String quantity, String balance, String paidamount, float sellingprice) {
         this.id = id;
         this.invoiceid = invoiceid;
         this.insurancepercent = insurancepercent;
@@ -42,11 +42,35 @@ public class Invoicedetails {
         this.costprice = costprice;
         this.partid = partid;
         this.quantity = quantity;
+        this.balance = balance;
+        this.paidamount = paidamount;
         this.sellingprice = sellingprice;
     }
 
-    
+    public String getBalance() {
+        return balance;
+    }
 
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public String getPaidamount() {
+        return paidamount;
+    }
+
+    public void setPaidamount(String paidamount) {
+        this.paidamount = paidamount;
+    }
+
+    public String getIsinsurancepaid() {
+        return isinsurancepaid;
+    }
+
+    public void setIsinsurancepaid(String isinsurancepaid) {
+        this.isinsurancepaid = isinsurancepaid;
+    }
+    
     public String getPartname() {
         return partname;
     }

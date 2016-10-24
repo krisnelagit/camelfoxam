@@ -52,7 +52,7 @@
         <table class="display tablestyle" id="table_id">
             <thead>
                 <tr>
-                    <td>Sr. No.</td>
+                    <!--<td>Sr. No.</td>-->
                     <td>Date</td>
                     <td>180 point id</td>
                     <td>Service Checklist No.</td>
@@ -65,24 +65,30 @@
                 <c:set value="1" var="count"></c:set>
                 <c:forEach var="ob" items="${pointchecklistdt}">
                     <tr>
-                        <td align="left">${count}</td>
+                        <!--<td align="left">${count}</td>-->
                         <td align="left">${ob.pcldate}</td>
                         <td align="left">${ob.id}</td>
                         <td align="left">${ob.cvid}</td>
                         <td align="left">${ob.vehiclenumber}</td>
                         <td align="left">${ob.carmodel}</td>
                         <td align="left">
+                            <c:if test="${!sessionScope.USERTYPE.equals('spares')}">
+                                <c:choose>
+                                    <c:when test="${ob.estimatestatus=='No'}">
+                                        <a href="addEstimatePage?pclid=${ob.id}&ises=${ob.estimatestatus}"><img src="images/eslitmate_icon.png" alt="" width="14" height="16" title="Create Estimate"/></a> &nbsp;
+                                        <a href="edit180pointchecklist?id=${ob.id}&brandid=${ob.branddetailid}" title="Edit 180 point" class="email_link3"><img src="images/edit.png" width="16" height="15"></a>&nbsp;
+                                    </c:when>
+                                </c:choose>
+                            </c:if>
                             <c:if test="${!sessionScope.USERTYPE.equals('spares') && !sessionScope.USERTYPE.equals('crm')}">
                                 <c:choose>
                                     <c:when test="${ob.estimatestatus=='No'}">
-                                        <a href="addEstimatePage?pclid=${ob.id}&ises=${ob.estimatestatus}"><img src="images/eslitmate_icon.png" alt="" width="14" height="16" title="Create Estimate"/></a> &nbsp;&nbsp;
-                                        <a href="edit180pointchecklist?id=${ob.id}&brandid=${ob.branddetailid}" title="Edit 180 point" class="email_link3"><img src="images/edit.png" width="16" height="15"></a>&nbsp;&nbsp;
-                                        <a onclick="confirmdelete('${ob.id}', this);"><img src="images/delete.png" width="16" height="17" /></a>
+                                        <a onclick="confirmdelete('${ob.id}', this);"><img src="images/delete.png" width="16" height="17" /></a>&nbsp;
                                         </c:when>
                                     </c:choose>
                                 </c:if>
 
-                            <a href="180pointchecklistviewdetails?pclid=${ob.id}"><img src="images/view.png" width="21" height="13" />&nbsp;&nbsp;</a>
+                            <a href="180pointchecklistviewdetails?pclid=${ob.id}"><img src="images/view.png" width="21" height="13" />&nbsp;</a>
 
                         </td>
                     </tr>

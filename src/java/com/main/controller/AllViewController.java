@@ -1450,12 +1450,11 @@ public class AllViewController {
         //ajax data required for adding data .
         modelAndView.addObject("customers", viewService.getanyhqldatalist("from customer where isdelete<>'Yes'"));
         modelAndView.addObject("vehicles", viewService.getanyhqldatalist("from branddetails where isdelete<>'Yes'"));
-//        modelAndView.addObject("carparts", viewService.getanyhqldatalist("from carparts where isdelete<>'Yes'"));
         modelAndView.addObject("services", viewService.getanyhqldatalist("from labourservices where isdelete<>'Yes'"));
         modelAndView.addObject("allmfgdata", viewService.getanyhqldatalist("from manufacturer where isdelete<>'Yes'"));
         modelAndView.addObject("insuranceCompanyDetails", viewService.getanyhqldatalist("from insurance_company where isdelete<>'Yes'"));
-        List<Taxes> taxList = viewService.getanyhqldatalist("from taxes where isdelete<>'Yes' and id in('ATX1','ATX2')");
-        modelAndView.addObject("vatDetails", taxList);
+//        List<Taxes> taxList = viewService.getanyhqldatalist("from taxes where isdelete<>'Yes' and id in('ATX1','ATX2')");
+//        modelAndView.addObject("vatDetails", taxList);
 
         //invoice data required for getting data
         List<Invoice> invoicemapforInsurance = viewService.getanyhqldatalist("from invoice where id='" + invoiceId + "' and isdelete='No'");
@@ -1480,12 +1479,22 @@ public class AllViewController {
             //code for all part calculations goes here
             DecimalFormat df = new DecimalFormat("####0.00");
             double company, customer, vattax, servicetax, companyresult, customerresult;
-            String companyy = liabilityList.get(0).get("company").toString();
+            String companyy = "";
+            if (liabilityList.get(0).get("company") != null) {
+                companyy = liabilityList.get(0).get("company").toString();
+            } else {
+                companyy = "0";
+            }
             company = Double.parseDouble(companyy);
+            if (liabilityList.get(0).get("customer") != null) {
+                customer = Double.parseDouble(liabilityList.get(0).get("customer").toString());
+            } else {
+                customer = 0;
+            }
             
-            customer = Double.parseDouble(liabilityList.get(0).get("customer").toString());
-            vattax = Double.parseDouble(taxList.get(0).getPercent().toString());
-            servicetax = Double.parseDouble(taxList.get(1).getPercent().toString());
+//            customer = Double.parseDouble(liabilityList.get(0).get("customer").toString());
+            vattax = Double.parseDouble(invoicemap.get(0).get("taxpercent1").toString());
+            servicetax = Double.parseDouble(invoicemap.get(0).get("taxpercent2").toString());
             
             companyresult = company * vattax / 100;
             customerresult = customer * vattax / 100;
@@ -1496,8 +1505,16 @@ public class AllViewController {
             modelAndView.addObject("liabilitypartcustomer", customerresult + customer);
             modelAndView.addObject("liabilitypartcustomertax", customerresult);
             //code for all labor calculations goes here
-            company = Double.parseDouble(laborliabilityList.get(0).get("company").toString());
-            customer = Double.parseDouble(laborliabilityList.get(0).get("customer").toString());
+            if (laborliabilityList.get(0).get("company") != null) {
+                company = Double.parseDouble(laborliabilityList.get(0).get("company").toString());
+            } else {
+                company = 0;
+            }
+            if (laborliabilityList.get(0).get("customer") != null) {
+                customer = Double.parseDouble(laborliabilityList.get(0).get("customer").toString());
+            } else {
+                customer = 0;
+            }
             
             companyresult = company * servicetax / 100;
             customerresult = customer * servicetax / 100;
@@ -1509,6 +1526,19 @@ public class AllViewController {
             modelAndView.addObject("liabilitylaborcustomertax", customerresult);
         }
         modelAndView.addObject("invoiceDt", invoicemap.get(0));
+        
+        //code for final comments here
+        if (invoicemap.get(0).get("jobno") !=null && !invoicemap.get(0).get("jobno").isEmpty()) {
+            String jsid=invoicemap.get(0).get("jobno");
+            List<Jobsheet> jobList=viewService.getanyhqldatalist("from jobsheet where id='"+jsid+"'");
+            modelAndView.addObject("finalcomments", jobList.get(0).getFinalcomments());
+            modelAndView.addObject("deliverydate", jobList.get(0).getDeliverydate());
+        }
+        
+
+        //code for ledger begins here 
+        modelAndView.addObject("ledgerdt", viewService.getanyhqldatalist("from ledger where isdelete='No' and customerid='" + invoicemap.get(0).get("customer_id") + "' and ledger_type='income'"));
+        //code for ledger ends! here 
 
         String vehicleid = invoicemap.get(0).get("vehicleid");
         
@@ -1733,7 +1763,8 @@ public class AllViewController {
 
     //verify admin login
     @RequestMapping(value = "verifylogin", method = RequestMethod.POST)
-    public ModelAndView verifylogin(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password, HttpSession session) {
+    public ModelAndView verifylogin(@RequestParam(value = "username") String username, 
+            @RequestParam(value = "password") String password, HttpSession session) {
         ModelAndView modelAndView = null;
         List<UserDetails> userlist = viewService.getanyhqldatalist("from userdetails where username='" + username + "' and password='" + password + "' and isdelete<>'Yes'");
         if (userlist != null && userlist.size() > 0 && userlist.get(0).getUsername().equals(username) && userlist.get(0).getPassword().equals(password)) {

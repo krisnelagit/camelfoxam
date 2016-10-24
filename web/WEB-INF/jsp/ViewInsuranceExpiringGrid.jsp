@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%-- 
     Document   : ViewInsuranceExpiringGrid
     Created on : 25-May-2015, 10:38:13
@@ -57,7 +58,7 @@
                     <td>Email id</td>
                     <td>Mobile no.</td>
                     <td>Policy No.</td>
-                    <td>Insurance co.</td>
+                    <!--<td>Insurance co.</td>-->
                     <td>Vehicle name</td>
                     <td>Expiry Date</td>
                     <td>&nbsp;</td>
@@ -73,9 +74,11 @@
                         <td align="left">${ob.email}</td>
                         <td align="left">${ob.mobilenumber}</td>
                         <td align="left">${ob.policyno}</td>
-                        <td align="left">${ob.insurancecompany}</td>
+                        <!--<td align="left">${ob.insurancecompany}</td>-->
                         <td align="left">${ob.vehiclename}</td>
-                        <td align="left">${ob.expirydate}</td>
+                        <td align="left">
+                            <fmt:formatDate type="date" value="${ob.expirydate}" />
+                        </td>
                         <td align="left"> 
                             <a href="viewInsuranceDetails?insuranceid=${ob.id}"><img src="images/view.png" width="21" height="13" title="View FollowUp Details" />&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;<a onclick="confirmdelete('${ob.id}', this);"><img src="images/delete.png" width="16" height="17" /></a>
                         </td>

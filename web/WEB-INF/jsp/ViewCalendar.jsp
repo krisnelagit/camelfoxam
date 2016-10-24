@@ -51,7 +51,7 @@
                     },
                     eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
                         var moddate = event.start.format();
-                        var urlandidanddatetime = event.url;
+                        var urlandidanddatetime = event.urlas;
                         var onlyapointmentid = urlandidanddatetime.substring(urlandidanddatetime.indexOf('=') + 1, urlandidanddatetime.indexOf('&') + 0);
                         moddate += ' ' + urlandidanddatetime.substring(urlandidanddatetime.lastIndexOf("-") + 4);
 
@@ -95,7 +95,7 @@
             <c:forEach var="oba" items="${calendardt}">
                         {
                             title: '${oba.subject}',
-                            url: 'appointmentid=${oba.id}&datetime=${oba.datetime}',
+                            urlas: 'appointmentid=${oba.id}&datetime=${oba.datetime}',
                             start: '${oba.date}',
                             datetime: '${oba.datetime}',
                             customername: '${oba.title}',

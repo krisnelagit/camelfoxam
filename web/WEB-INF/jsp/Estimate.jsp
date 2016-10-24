@@ -26,35 +26,52 @@
             <thead>
                 <tr>
                     <td>Date</td>
-                    <td>Estimate no.&nbsp;&nbsp;</td>
+                    <td>Estimate</td>
                     <td>Customer name</td>
                     <td>Vehicle Model</td>
                     <td>Vehicle No.</td>
-                    <td>Customer Approval</td>
+                    <td>Cust. Approval</td>
                     <td>&nbsp;</td>
                 </tr>
             </thead>
             <tbody>
                 <c:forEach var="ob" items="${estimatedtls}">
                     <tr>
-                        <td align="left">${ob.savedate}</td>
+                        <td align="left">
+                            <fmt:formatDate type="date" value="${ob.savedate}" /> 
+                        </td>
                         <td align="left">${ob.estid}</td>
                         <td align="left">${ob.custname}</td>
                         <td align="left">${ob.carmodel}</td>
                         <td align="left">${ob.vehiclenumber}</td>
                         <td align="left">${ob.approval}</td>
                         <td align="left">
-                            <c:if test="${!sessionScope.USERTYPE.equals('spares') && !sessionScope.USERTYPE.equals('crm')}">
-                                <a href="jobsheet-add?estid=${ob.estid}&jsre=${ob.isjobsheetready}"><img src="images/psjs.png" width="14" height="16" title="Create Job Sheet"/></a> &nbsp;&nbsp;
-                                </c:if> 
-                            <a href="editEstimatePage?estid=${ob.estid}"><img src="images/edit.png" width="16" height="15" />&nbsp;&nbsp;</a>
-                                <c:if test="${sessionScope.USERTYPE.equals('admin')}">
-                                    <c:if test="${ob.approval=='No'}">
-                                        <a href="estimategridlink?estimateid=${ob.estid}&jsre=${ob.isjobsheetready}"><img src="images/Accept_file_or_checklist_24.png" width="16" height="15" />&nbsp;&nbsp;</a>
-                                    </c:if>                                
+                            <c:choose>
+                                <c:when test="${ob.isjobsheetready=='No' && ob.approval=='Yes' && ob.confirm_estimate=='Yes'}">
+                                    <c:if test="${!sessionScope.USERTYPE.equals('spares')}">
+                                        <a href="jobsheet-add?estid=${ob.estid}&jsre=${ob.isjobsheetready}"><img src="images/psjs.png" width="14" height="16" title="Create Job Sheet"/></a> &nbsp;
+                                        </c:if>
+                                    </c:when>
+                                </c:choose>
+
+                            <c:if test="${sessionScope.USERTYPE.equals('admin') || sessionScope.USERTYPE.equals('crm') || sessionScope.USERTYPE.equals('floor manager')}">
+                                <c:if test="${ob.approval=='No'}">
+                                    <a href="estimategridlink?estimateid=${ob.estid}&jsre=${ob.isjobsheetready}"><img src="images/Accept_file_or_checklist_24.png" width="16" height="15" />&nbsp;</a>
+                                    </c:if>                                            
                                 </c:if>
-                            <a href="estimate-view?estid=${ob.estid}"><img src="images/view.png" width="21" height="13" /></a>&nbsp;&nbsp; 
-                            <a href="estimate-viewmail?estid=${ob.estid}"><img src="images/email.png" width="15" /></a>&nbsp;&nbsp; 
+                                <c:if test="${sessionScope.USERTYPE.equals('admin') || sessionScope.USERTYPE.equals('spares') || sessionScope.USERTYPE.equals('crm') || sessionScope.USERTYPE.equals('floor manager')}">
+                                    <c:if test="${ob.isjobsheetready=='No'}">
+                                    <a href="editEstimatePage?estid=${ob.estid}"><img src="images/edit.png" width="16" height="15" />&nbsp;</a>
+                                    </c:if>
+                                </c:if>
+                            <a href="estimate-view?estid=${ob.estid}"><img src="images/view.png" width="21" height="13" /></a>&nbsp; 
+                            <a href="estimate-viewmail?estid=${ob.estid}"><img src="images/email.png" width="15" /></a>&nbsp; 
+                                <c:choose>
+                                    <c:when test="${ob.enableDelete=='Yes'}">
+                                    <a onclick="confirmdelete('${ob.estid}', this);"><img src="images/delete.png" width="16" height="17" /></a>
+                                    </c:when>
+                                </c:choose>
+
                             <!--<img src="images/delete.png" width="16" height="17" />-->
                         </td>
                     </tr>
