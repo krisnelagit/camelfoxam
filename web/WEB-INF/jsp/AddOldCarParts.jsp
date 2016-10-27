@@ -10,18 +10,26 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add Car Parts</title>        
+        <title>Add Parts</title>        
     </head>
     <body>
-        <form action="insertgenericcarparts" method="post">
-            <a href="viewGenericVehicleList" class="view">Back</a>
-            <h2>Car Parts</h2>
+        <form action="insertoldcarparts" method="post">
+            <a href="viewOldPartVehicleList" class="view">Back</a>
+            <h2>Old Parts</h2>
             <br />
 
             <table width="100%" cellpadding="5">
                 <tr>
                     <td align="left" valign="top">Part name</td>
                     <td align="left" valign="top"><input type="text" required="" name="name" id="textfield5" /></td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top">OEM Part No.</td>
+                    <td align="left" valign="top"><input type="text" name="oempartnumber" id="textfield5" /></td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top">Part location</td>
+                    <td align="left" valign="top"><input type="text" name="partlocation" id="textfield5" /></td>
                 </tr>
                 <tr>
                     <td align="left" valign="top">Category name</td>
@@ -58,16 +66,13 @@
                             <option>Yes</option>
                             <option>No</option>
                         </select>
+                        <input type="hidden" name="isOld" value="Yes" />
+                        <input type="hidden" name="itemtype" value="part" />
                     </td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
-                    <td> 
-                        <input type="hidden" name="isOld" value="No" />
-                        <input type="hidden" name="itemtype" value="part" />
-                        <input type="submit" value="Save" class="view3" /> &nbsp;&nbsp;&nbsp;
-                        <input type="reset" value="Reset" class="view3" />
-                    </td>
+                    <td><input type="submit" value="Save" class="view3" /> &nbsp;&nbsp;&nbsp;<input type="reset" value="Reset" class="view3" /></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>

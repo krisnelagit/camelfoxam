@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%-- 
     Document   : ViewFeedbackGrid
     Created on : 19-Jun-2015, 13:42:34
@@ -25,7 +26,7 @@
                     if (val == "All") {
                         fnResetAllFilters(oTable);
                     } else {
-                        oTable.fnFilter("^" + $(this).val(), 8, true);
+                        oTable.fnFilter("^" + $(this).val(), 7, true);
                     }
                     //oTable.fnFilter("");
                 });
@@ -87,12 +88,12 @@
             <table class="display tablestyle" id="table_id">
                 <thead>
                     <tr>
-                        <td>Sr. No.</td>
+                        <!--<td>Sr. No.</td>-->
                         <td>Id.</td>
-                        <td>Invoice Id.</td>
+                        <td>Invoice</td>
                         <td>Date</td>
-                        <td>Customer Name</td>
-                        <td>Mobile number</td>
+                        <td>Cust. Name</td>
+                        <td>Mob.</td>
                         <td>Brand</td>
                         <td>Model</td>
                         <td>Status</td>
@@ -103,10 +104,12 @@
                 <c:set value="1" var="count"></c:set>
                 <c:forEach var="ob" items="${fbListDetails}">
                     <tr>
-                        <td align="left">${count}</td>
+                        <!--<td align="left">${count}</td>-->
                         <td align="left">${ob.fbid}</td>
                         <td align="left">${ob.id}</td>
-                        <td align="left">${ob.savedate}</td>
+                        <td align="left">
+                            <fmt:formatDate type="date" value="${ob.savedate}" />
+                        </td>
                         <td align="left">${ob.customername}</td>
                         <td align="left">${ob.customermobilenumber}</td>
                         <td align="left">${ob.brand}</td>
@@ -123,7 +126,15 @@
                                 </c:when>
                             </c:choose>
                         </td>
-                        <td align="left"> <a href="userFeedbackLink?fbid=${ob.fbid}"><img src="images/chat57.png" width="16" height="15"></a>&nbsp;&nbsp;<a onclick="confirmdelete('${ob.fbid}', this);"><img src="images/delete.png" width="16" height="17" /></a></td>
+                        <td align="left"> 
+                            <a href="userFeedbackLink?fbid=${ob.fbid}"><img src="images/chat57.png" width="16" height="15"></a>&nbsp;&nbsp;
+                            <c:choose>
+                                <c:when test="${ob.fbstatus=='complete'}">
+                                   <a href="userFeedbackViewLink?fbid=${ob.fbid}"><img src="images/view.png" width="16" height="15"></a>&nbsp;&nbsp;
+                                </c:when>
+                            </c:choose> 
+                            <a onclick="confirmdelete('${ob.fbid}', this);"><img src="images/delete.png" width="16" height="17" /></a>
+                        </td>
                     </tr>  
                     <c:set value="${count+1}" var="count"></c:set>
                 </c:forEach>                

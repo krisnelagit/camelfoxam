@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class CarPartVault {
     @Id
     private String id;
-    private String categoryid,a,b,c,d,itemtype,name,isdelete="No",modifydate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());  
+    private String showIn180,isOld,categoryid,a,b,c,d,itemtype,name,isdelete="No",modifydate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());  
 
     public CarPartVault(String id, String categoryid, String a, String b, String c, String d, String itemtype, String name) {
         this.id = id;

@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>        
+        <title>Add Parts</title>        
     </head>
     <body>
         <form action="insertcarparts" method="post">
@@ -22,6 +22,14 @@
                 <tr>
                     <td align="left" valign="top">Part name</td>
                     <td align="left" valign="top"><input type="text" required="" name="name" id="textfield5" /></td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top">OEM Part No.</td>
+                    <td align="left" valign="top"><input type="text" name="oempartnumber" id="textfield5" /></td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top">Part location</td>
+                    <td align="left" valign="top"><input type="text" name="partlocation" id="textfield5" /></td>
                 </tr>
                 <tr>
                     <td align="left" valign="top">Category name</td>
@@ -58,6 +66,17 @@
                             <option value="part">part</option>
                             <option value="consumable">consumable</option>
                         </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top">Show in 180: </td>
+                    <td align="left" valign="top">
+                        <select required="" name="showIn180">
+                            <option value="">--Select--</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                        <input type="hidden" name="isOld" value="No" />
                     </td>
                 </tr>
                 <tr>

@@ -74,7 +74,7 @@
                                     <li><a href="viewVehicleList">Spare Parts</a></li>
                                     <li><a href="viewGenericVehicleList">Generic Parts</a></li>
                                     <li><a href="viewConsumableVehicleList">Paints</a></li>
-                                    <li><a href="viewreceivables">Receivables</a></li>
+                                    <li><a href="viewreceivables">Branch transfer</a></li>
                                 </ul>
                             </li>
                             <table width="70" class="settings-right">
@@ -133,7 +133,7 @@
                                     <li><a href="viewVehicleList">Spare Parts</a></li>
                                     <li><a href="viewGenericVehicleList">Generic Parts</a></li>
                                     <li><a href="viewConsumableVehicleList">Paints</a></li>
-                                    <li><a href="viewreceivables">Receivables</a></li>
+                                    <li><a href="viewreceivables">Branch transfer</a></li>
                                 </ul>
                             </li>
                             <li><a href="#">Features</a>
@@ -204,7 +204,7 @@
                                     <li><a href="viewVehicleList">Spare Parts</a></li>
                                     <li><a href="viewGenericVehicleList">Generic Spare Parts</a></li>
                                     <li><a href="viewConsumableVehicleList">Paints</a></li>
-                                    <li><a href="viewreceivables">Receivables</a></li>
+                                    <li><a href="viewreceivables">Branch transfer</a></li>
                                 </ul>
                             </li>
                             <li><a href="#">Masters</a>

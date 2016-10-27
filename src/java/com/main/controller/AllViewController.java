@@ -1831,14 +1831,14 @@ public class AllViewController {
         List<Map<String, Object>> listofcheckList = new ArrayList<Map<String, Object>>();
         List<Category> categorys = viewService.getanyhqldatalist("from category where isdelete<>'Yes' and id!='" + env.getProperty("used_categoryid") + "'");
         for (int i = 0; i < categorys.size(); i++) {
-            List<CarPartVault> carPartVaults = viewService.getanyhqldatalist("from carpartvault where categoryid='" + categorys.get(i).getId() + "' and isdelete='No'");
+            List<CarPartVault> carPartVaults = viewService.getanyhqldatalist("from carpartvault where categoryid='" + categorys.get(i).getId() + "' and itemtype='part' and  showin180='Yes' and isdelete='No'");
             Map<String, Object> getmap = new HashMap<String, Object>();
             getmap.put("categoryname", categorys.get(i).getName());
             List<Map<String, Object>> listofpartinfo = new ArrayList<Map<String, Object>>();
             for (int j = 0; j < carPartVaults.size(); j++) {
                 List<CarPartInfo> partinfo = viewService.getanyjdbcdatalist("SELECT cpi.id as cpiid,cpv.name as partname FROM carpartinfo cpi\n"
                         + "inner join carpartvault cpv on cpv.id=cpi.vaultid\n"
-                        + "where cpi.isdelete='No' and cpi.branddetailid in('" + brandid + "','" + env.getProperty("generic_brand_detailid") + "')  and cpi.vaultid='" + carPartVaults.get(j).getId() + "' and cpv.itemtype='part'");
+                        + "where cpi.isdelete='No' and cpi.branddetailid in('" + brandid + "','" + env.getProperty("generic_brand_detailid") + "')  and cpi.vaultid='" + carPartVaults.get(j).getId() + "' and cpv.itemtype='part' and  cpv.showin180='Yes'");
                 if (partinfo.size() > 0) {
                     Map<String, Object> getmap2 = new HashMap<String, Object>();
                     getmap2.put("categoryname", partinfo);
@@ -3079,6 +3079,21 @@ public class AllViewController {
         return modelAndView;
     }
 
+    //user feedback questionairpage
+    @RequestMapping(value = "userFeedbackViewLink")
+    public ModelAndView userFeedbackViewLink(@RequestParam(value = "fbid") String fbid) {
+        ModelAndView modelAndView = new ModelAndView("ViewFeedback");
+        modelAndView.addObject("invoicedtls", viewService.getanyjdbcdatalist("SELECT fb.id as fbid,fb.status as fbstatus,fb.question1,fb.question2,fb.question3,fb.question4,fb.question5,fb.question6,inv.*,cu.name as customername,bd.vehiclename as model,br.name as brand FROM feedback fb\n"
+                + "inner join invoice inv on inv.id=fb.invoiceid\n"
+                + "inner join customer cu on cu.mobilenumber=inv.customermobilenumber\n"
+                + "inner join branddetails bd on bd.id=inv.vehicleid\n"
+                + "inner join brand br on br.id=bd.brandid\n"
+                + "where fb.id='" + fbid + "'").get(0));
+
+        modelAndView.addObject("followuphistorydetails", viewService.getanyhqldatalist("FROM followups where type='feedback' and feedbackid='" + fbid + "'"));
+        return modelAndView;
+    }
+
     //redirect to edit popup for approval limit
     @RequestMapping(value = "getFollowupDetails", method = RequestMethod.POST)
     public void getFollowupDetails(@RequestParam(value = "fsid") String fsid, HttpServletResponse response) throws IOException {
@@ -3338,15 +3353,24 @@ public class AllViewController {
         modelAndView.addObject("ledgerid", ledgerid);
 
         List<Invoice> invoicelist = viewService.getanyhqldatalist("from invoice where id='" + invoiceid + "'");
+        int percent=0,tax1=0,tax2=0;
         if (!invoicelist.get(0).getTaxAmount1().equals("0") && !invoicelist.get(0).getTaxAmount2().equals("0")) {
             //check if it is service + vat
-            modelAndView.addObject("taxdtls", viewService.getspecifichqldata(Taxes.class, "ATX4"));
+            tax1=Integer.parseInt(invoicelist.get(0).getTaxpercent1());
+            tax2=Integer.parseInt(invoicelist.get(0).getTaxpercent2());
+            percent=tax1+tax2;
+            modelAndView.addObject("taxdtlsID", "LTX4");
+            modelAndView.addObject("taxdtlsPercent", ""+percent);
         } else if (!invoicelist.get(0).getTaxAmount1().equals("0")) {
             //check if it is vat
-            modelAndView.addObject("taxdtls", viewService.getspecifichqldata(Taxes.class, "ATX1"));
+            tax1=Integer.parseInt(invoicelist.get(0).getTaxpercent1());
+            modelAndView.addObject("taxdtlsID", "LTX1");
+            modelAndView.addObject("taxdtlsPercent", ""+tax1);
         } else if (!invoicelist.get(0).getTaxAmount2().equals("0")) {
             //check if it is service
-            modelAndView.addObject("taxdtls", viewService.getspecifichqldata(Taxes.class, "ATX2"));
+            tax2=Integer.parseInt(invoicelist.get(0).getTaxpercent2());
+            modelAndView.addObject("taxdtlsID", "LTX2");
+            modelAndView.addObject("taxdtlsPercent", ""+tax2);
         }
         return modelAndView;
     }
